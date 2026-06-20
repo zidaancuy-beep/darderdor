@@ -8,9 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Urbanist:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================================================
-           1. ATURAN DASAR & TEMA COLOURED NEON (DARK MODE)
-           ========================================================================== */
         :root {
             --bg-color: #0d0d12;
             --accent-color: #00adb5;
@@ -29,12 +26,11 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Urbanist', sans-serif;
-            overflow: hidden; /* Mengunci scroll vertikal agar efek geser kesamping bekerja sempurna */
+            overflow: hidden; 
             height: 100vh;
             width: 100vw;
         }
 
-        /* Background Bintang Esotik */
         .stars-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -48,9 +44,7 @@
             z-index: 1;
         }
 
-        /* ==========================================================================
-           2. NAVIGASI UTAMA (HEADER)
-           ========================================================================== */
+        /* NAVBAR - DIPASTIKAN BISA DIPENCET */
         nav {
             position: fixed;
             top: 0;
@@ -60,7 +54,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            z-index: 9999; /* Sangat di atas agar bisa di-klik */
             background: linear-gradient(to bottom, rgba(13,13,18,0.9), transparent);
         }
 
@@ -70,17 +64,21 @@
             font-weight: 700;
             color: var(--accent-color);
             cursor: pointer;
-            text-shadow: 0 0 10px rgba(0, 173, 181, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
         }
 
         .nav-links a {
             color: #aaa;
             text-decoration: none;
-            margin-left: 20px;
             font-weight: 600;
             transition: 0.3s;
             cursor: pointer;
             font-family: 'Space Grotesk', sans-serif;
+            padding: 5px 10px;
         }
 
         .nav-links a:hover, .nav-links a.active {
@@ -88,14 +86,11 @@
             text-shadow: 0 0 8px rgba(0, 173, 181, 0.5);
         }
 
-        /* ==========================================================================
-           3. SISTEM SLIDER (GESER HALAMAN KESAMPING)
-           ========================================================================== */
+        /* SLIDER SYSTEM */
         .main-slider {
             display: flex;
-            width: 400vw; /* 4 Halaman ke samping */
+            width: 400vw; 
             height: 100vh;
-            /* Transisi cubic-bezier bikin efek geser super smooth dan mahal */
             transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
             position: relative;
             z-index: 2;
@@ -108,29 +103,25 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 10%;
+            padding: 80px 10% 0 10%;
             text-align: center;
         }
 
-        /* ==========================================================================
-           4. ANIMASI ROKET & ASAP PARTIKEL
-           ========================================================================== */
+        /* ROKET & ASAP - DIKUNCI AGAR TIDAK MENGHALANGI KLIK */
         .rocket-container {
             position: fixed;
             bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 200;
-            pointer-events: none;
+            z-index: 50; /* Di bawah navbar agar aman */
+            pointer-events: none; /* Klik tembus, tidak menghalangi menu */
         }
 
         .rocket-body {
             font-size: 4.5rem;
-            /* Efek pijar api pada emoji roket */
             filter: drop-shadow(0 0 15px var(--fire-color)) drop-shadow(0 0 30px var(--fire-color));
         }
 
-        /* Trigger terbang lewat JS */
         .launching {
             animation: rocketFly 1s ease-in-out forwards;
         }
@@ -141,19 +132,16 @@
             100% { bottom: 120%; transform: translateX(-50%) scale(1); }
         }
 
-        /* Komponen asap buatan */
         .smoke-particle {
             position: fixed;
             background: rgba(255, 255, 255, 0.35);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 199;
+            z-index: 49;
             filter: blur(4px);
         }
 
-        /* ==========================================================================
-           5. DETAIL VISUAL KONTEN & BINGKAI API
-           ========================================================================== */
+        /* BINGKAI API */
         .fire-frame {
             width: 180px;
             height: 180px;
@@ -183,7 +171,6 @@
         h1, h2 {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.5rem;
-            letter-spacing: -0.5px;
             margin-bottom: 10px;
         }
 
@@ -198,7 +185,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Badge TikTok Mengkilap */
         .tiktok-badge {
             display: inline-flex;
             align-items: center;
@@ -229,7 +215,6 @@
             opacity: 0.6;
         }
 
-        /* Tombol Kontak Grid */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -261,10 +246,26 @@
         .ig-btn:hover { border-color: #e1306c !important; color: #e1306c; }
         .wa-btn:hover { border-color: #25d366 !important; color: #25d366; }
 
+        /* Tampilan HP/Mobile Responsif */
         @media (max-width: 650px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 5%;
+            }
+            .nav-links {
+                gap: 5px;
+            }
+            .nav-links a {
+                font-size: 0.9rem;
+                padding: 5px 8px;
+            }
+            .page {
+                padding-top: 130px;
+            }
             .contact-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; } /* Sembunyikan link di HP biar gak penuh */
             h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -294,4 +295,36 @@
             </div>
             <h1>Zaidaan Rizqullah H.</h1>
             <p style="color: var(--accent-color); font-weight: 600; font-size: 1.1rem; margin-bottom: 10px;">Tech Enthusiast | Digital Creator</p>
-            <p style="max-width: 500px; opacity: 0.7; font-size: 0.95rem;">Selamat datang di website
+            <p style="max-width: 500px; opacity: 0.7; font-size: 0.95rem;">Selamat datang di website portofolio personal saya. Tempat di mana kreativitas tulisan bertemu dengan baris kode.</p>
+        </div>
+
+        <div class="page">
+            <div class="card">
+                <h2>Tentang Perjalanan Saya</h2>
+                <p style="opacity: 0.8; text-align: left; font-size: 0.95rem; margin-top: 15px;">
+                    Saya adalah seorang pegiat teknologi yang berbasis di Surabaya. Selain mengulik logika pemrograman web (HTML, CSS), saya juga aktif menuangkan ekspresi emosional dan bercerita lewat dunia kepenulisan kreatif (*creative writing*).
+                </p>
+                <div style="text-align: left; margin-top: 20px; font-size: 0.9rem; opacity: 0.9; line-height: 2;">
+                    • Berbasis di Kota Surabaya, Jawa Timur<br>
+                    • Kreator Konten Media Sosial Berbasis Narasi<br>
+                    • Fokus pada Front-End Design & Logika Dasar
+                </div>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="tiktok-badge">TIKTOK CREATOR</div>
+            <h2>@semogarilet</h2>
+            <div class="card">
+                <p style="font-style: italic; opacity: 0.8; font-size: 1.05rem;">"Menyuarakan apa yang sulit diungkapkan melalui kata-kata."</p>
+                <div class="stat-container">
+                    <div class="stat-box">
+                        <h3>50K+</h3>
+                        <p>Total Likes</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>Viral</h3>
+                        <p>Konten Relevan</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2
