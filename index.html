@@ -44,7 +44,7 @@
             z-index: 1;
         }
 
-        /* NAVBAR - DIPASTIKAN BISA DIPENCET */
+        /* NAVBAR FIX - DIJAMIN BISA DI-KLIK */
         nav {
             position: fixed;
             top: 0;
@@ -54,7 +54,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 9999; /* Sangat di atas agar bisa di-klik */
+            z-index: 9999; 
             background: linear-gradient(to bottom, rgba(13,13,18,0.9), transparent);
         }
 
@@ -68,20 +68,23 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
+            gap: 10px;
         }
 
-        .nav-links a {
+        /* Menggunakan tombol transparan agar rill wajib merespons klik browser */
+        .nav-item {
+            background: none;
+            border: none;
             color: #aaa;
-            text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
-            cursor: pointer;
+            font-size: 1rem;
             font-family: 'Space Grotesk', sans-serif;
-            padding: 5px 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .nav-links a:hover, .nav-links a.active {
+        .nav-item:hover, .nav-item.active {
             color: var(--accent-color);
             text-shadow: 0 0 8px rgba(0, 173, 181, 0.5);
         }
@@ -107,14 +110,14 @@
             text-align: center;
         }
 
-        /* ROKET & ASAP - DIKUNCI AGAR TIDAK MENGHALANGI KLIK */
+        /* ROKET & ASAP AMAN UNDER LAYOVER */
         .rocket-container {
             position: fixed;
             bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 50; /* Di bawah navbar agar aman */
-            pointer-events: none; /* Klik tembus, tidak menghalangi menu */
+            z-index: 50; 
+            pointer-events: none; 
         }
 
         .rocket-body {
@@ -246,22 +249,21 @@
         .ig-btn:hover { border-color: #e1306c !important; color: #e1306c; }
         .wa-btn:hover { border-color: #25d366 !important; color: #25d366; }
 
-        /* Tampilan HP/Mobile Responsif */
         @media (max-width: 650px) {
             nav {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
                 padding: 15px 5%;
             }
             .nav-links {
-                gap: 5px;
+                gap: 2px;
             }
-            .nav-links a {
-                font-size: 0.9rem;
-                padding: 5px 8px;
+            .nav-item {
+                font-size: 0.85rem;
+                padding: 6px 10px;
             }
             .page {
-                padding-top: 130px;
+                padding-top: 140px;
             }
             .contact-grid { grid-template-columns: 1fr; }
             h1 { font-size: 1.8rem; }
@@ -280,10 +282,10 @@
     <nav>
         <div class="logo" onclick="goToPage(0)">Zaidaan.</div>
         <div class="nav-links">
-            <a onclick="goToPage(0)" id="link-0" class="active">Home</a>
-            <a onclick="goToPage(1)" id="link-1">Tentang</a>
-            <a onclick="goToPage(2)" id="link-2">Karya</a>
-            <a onclick="goToPage(3)" id="link-3">Kontak</a>
+            <button class="nav-item active" id="link-0" onclick="goToPage(0)">Home</button>
+            <button class="nav-item" id="link-1" onclick="goToPage(1)">Tentang</button>
+            <button class="nav-item" id="link-2" onclick="goToPage(2)">Karya</button>
+            <button class="nav-item" id="link-3" onclick="goToPage(3)">Kontak</button>
         </div>
     </nav>
 
@@ -327,4 +329,79 @@
                         <p>Konten Relevan</p>
                     </div>
                 </div>
-                <p style="margin-top: 2
+                <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">Fokus menyusun konten *quoters* emosional dan motivasi kehidupan yang sukses membangun interaksi tinggi di platform TikTok.</p>
+                <a href="https://www.tiktok.com/@semogarilet" target="_blank" style="color: #00f2ea; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: 600; font-size: 0.9rem; border-bottom: 1px dashed;">Kunjungi TikTok Saya →</a>
+            </div>
+        </div>
+
+        <div class="page">
+            <h2>Mari Terhubung</h2>
+            <p style="opacity: 0.6; font-size: 0.95rem;">Hubungi saya secara langsung melalui jaringan di bawah ini:</p>
+            <div class="contact-grid">
+                <a href="mailto:zidaancuy@gmail.com">Email</a>
+                <a href="https://instagram.com/zidaanherlambang" target="_blank" class="ig-btn">Instagram</a>
+                <a href="https://wa.me/6285755882918" target="_blank" class="wa-btn">WhatsApp</a>
+                <a href="https://github.com/zidaancuy-beep" target="_blank">GitHub</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const rocket = document.getElementById('rocket');
+
+        function goToPage(index) {
+            // Bereskan status tombol aktif
+            document.querySelectorAll('.nav-links .nav-item').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`link-${index}`);
+            if(activeBtn) activeBtn.classList.add('active');
+
+            // Geser slider utama
+            slider.style.transform = `translateX(-${index * 100}vw)`;
+
+            // Terbang roket
+            rocket.classList.remove('launching');
+            void rocket.offsetWidth; 
+            rocket.classList.add('launching');
+
+            createSmokeEffect();
+        }
+
+        function createSmokeEffect() {
+            let smokeCount = 0;
+            const smokeInterval = setInterval(() => {
+                if (smokeCount > 18) { 
+                    clearInterval(smokeInterval);
+                    return;
+                }
+                
+                const particle = document.createElement('div');
+                particle.className = 'smoke-particle';
+                
+                const startX = window.innerWidth / 2;
+                const startY = window.innerHeight * 0.7; 
+                
+                const size = Math.random() * 25 + 15;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${startX + (Math.random() - 0.5) * 40}px`;
+                particle.style.top = `${startY}px`;
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    { transform: 'translateY(0) scale(1)', opacity: 0.7 },
+                    { transform: `translate(${(Math.random() - 0.5) * 120}px, 160px) scale(2.2)`, opacity: 0 }
+                ], {
+                    duration: 900,
+                    easing: 'ease-out'
+                }).onfinish = () => particle.remove();
+
+                smokeCount++;
+            }, 30);
+        }
+    </script>
+
+</body>
+</html>
