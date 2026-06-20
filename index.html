@@ -346,7 +346,6 @@
         const slider = document.getElementById('slider');
         const rocket = document.getElementById('rocket');
 
-        // SAKTI FIX: Menggunakan nama fungsi yang sinkron dengan tombol HTML
         function goToPage(index) {
             document.querySelectorAll('.nav-links .nav-item').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`link-${index}`);
