@@ -44,7 +44,6 @@
             z-index: 1;
         }
 
-        /* NAVBAR FIX - DIJAMIN BISA DI-KLIK */
         nav {
             position: fixed;
             top: 0;
@@ -71,7 +70,6 @@
             gap: 10px;
         }
 
-        /* Menggunakan tombol transparan agar rill wajib merespons klik browser */
         .nav-item {
             background: none;
             border: none;
@@ -89,7 +87,6 @@
             text-shadow: 0 0 8px rgba(0, 173, 181, 0.5);
         }
 
-        /* SLIDER SYSTEM */
         .main-slider {
             display: flex;
             width: 400vw; 
@@ -110,7 +107,6 @@
             text-align: center;
         }
 
-        /* ROKET & ASAP AMAN UNDER LAYOVER */
         .rocket-container {
             position: fixed;
             bottom: -150px;
@@ -144,7 +140,6 @@
             filter: blur(4px);
         }
 
-        /* BINGKAI API */
         .fire-frame {
             width: 180px;
             height: 180px;
@@ -351,16 +346,14 @@
         const slider = document.getElementById('slider');
         const rocket = document.getElementById('rocket');
 
+        // SAKTI FIX: Menggunakan nama fungsi yang sinkron dengan tombol HTML
         function goToPage(index) {
-            // Bereskan status tombol aktif
             document.querySelectorAll('.nav-links .nav-item').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`link-${index}`);
             if(activeBtn) activeBtn.classList.add('active');
 
-            // Geser slider utama
             slider.style.transform = `translateX(-${index * 100}vw)`;
 
-            // Terbang roket
             rocket.classList.remove('launching');
             void rocket.offsetWidth; 
             rocket.classList.add('launching');
